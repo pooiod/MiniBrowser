@@ -8,8 +8,8 @@
   "display_override": ["tabbed"],
   "display": "standalone",
 
-  "background_color": "#fff",
-  "theme_color": "#00c3ff",
+  "background_color": "#f5f5f5",
+  "theme_color": "#fff",
   
   "start_url": "/app",
   "scope": "/app",
