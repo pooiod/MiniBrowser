@@ -110,7 +110,7 @@
         <!--<div class="subheading">To install, make sure you're on the supported platform</div>-->
         <div class="install-container">
             <div class="subheading">Click below to install MiniBrowser on your Chromebook.</div>
-            <button class="install-button" id="installApp">Install for Chrome OS</button><br>
+            <button class="install-button" id="installApp" style="opacity: 0.5;" disabled>Install for Chrome OS</button><br><br>
             <sub>Due to concerns about students using this in school, a simplified chrome os version is provided that has GoGardian intigration</sub>
         </div>
         <div class="windows-install-container">
@@ -159,7 +159,8 @@
             console.log(event);
             event.preventDefault();
             installPrompt = event;
-            installButton.style.display = "block";
+            installButton.disabled = false;
+            installButton.style.opacity = 1;
         });
 
         installButton.addEventListener("click", async () => {
