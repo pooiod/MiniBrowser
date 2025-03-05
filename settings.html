@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .settings-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-bottom: none;
+            margin-bottom: 0px;
+            padding: 15px;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+        
+        .settings-card:first-child {
+            border-top: 1px solid #ddd;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            padding-top: 15px;
+        }
+        
+        .settings-card:last-child {
+            border-bottom: 1px solid #ddd;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-bottom: 15px;
+        }
+
+        .settings-card header {
+            font-weight: bold;
+            margin-bottom: 0px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .settings-card:has(header) {
+            padding-bottom: 10px;
+        }
+
+        .input-field {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .input-slider {
+            width: calc(100% - 20px);
+            margin-bottom: 0px;
+        }
+        
+        .input-color {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            height: 45px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .reset-btn {
+            background-color: #FF5733;
+            float: right;
+        }
+
+        .reset-btn:hover {
+            background-color: #C70039;
+        }
+
+        .setting-section {
+            margin-bottom: 15px;
+        }
+
+        .setting-section select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .setting-section textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: calc(100% - 20px);
+        }
+
+        .setting-section label {
+            display: block;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="margin-top: 0px">Settings</h1>
+    <div id="settings-container"></div><br>
+    <button class="btn" id="save-btn">Save Settings</button>
+    <button class="btn reset-btn" id="reset-btn">Reset to Default</button>
+</div>
+
+<script>
+    function loadSettings() {
+        const cookie = document.cookie.replace(/(?:(?:^|.*;\s*)MiniBrowserSettings\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        let settings = [];
+
+        try {
+            settings = cookie ? JSON.parse(decodeURIComponent(cookie)) : [];
+        } catch (e) {
+            settings = [];
+        }
+
+        if (settings.length === 0) {
+            settings = defaultMiniBrowserSettings;
+        }
+
+        return settings;
+    }
+
+    function saveSettings(settings) {
+        document.cookie = "MiniBrowserSettings=" + encodeURIComponent(JSON.stringify(settings)) + ";path=/";
+        location.reload(); // Reload the page to reflect changes
+    }
+
+    // Reset settings to defaults
+    function resetSettings() {
+        saveSettings(defaultMiniBrowserSettings);
+    }
+
+    function renderSettings(settings) {
+        const container = document.getElementById("settings-container");
+        container.innerHTML = '';
+
+        settings.forEach(setting => {
+            const card = document.createElement("div");
+            card.className = 'settings-card';
+            const header = document.createElement("header");
+
+            switch (setting.type) {
+                case 'header':
+                    header.textContent = setting.value;
+                    card.appendChild(header);
+                    break;
+                case 'string':
+                    card.innerHTML += `
+                        <div class="setting-section">
+                            <label for="${setting.id}">${setting.id}</label>
+                            <input class="input-field" id="${setting.id}" type="text" value="${setting.value}">
+                        </div>
+                    `;
+                    break;
+                case 'url':
+                    card.innerHTML += `
+                        <div class="setting-section">
+                            <label for="${setting.id}">${setting.id}</label>
+                            <input class="input-field" id="${setting.id}" type="url" value="${setting.value}" spellcheck="false" autocorrect="off">
+                        </div>
+                    `;
+                    break;
+                case 'slider':
+                    card.innerHTML += `
+                        <div class="setting-section">
+                            <label for="${setting.id}">${setting.id}</label>
+                            <input class="input-field input-slider" id="${setting.id}" type="range" min="${setting.min}" max="${setting.max}" step="${setting.step}" value="${setting.value}">
+                        </div>
+                    `;
+                    break;
+                case 'toggle':
+                    card.innerHTML += `
+                        <div class="setting-section">
+                            <label for="${setting.id}">${setting.id}</label>
+                            <input type="checkbox" id="${setting.id}" ${setting.value ? 'checked' : ''}>
+                        </div>
+                    `;
+                    break;
+                case 'color':
+                    card.innerHTML += `
+                        <div class="setting-section">
+                            <label for="${setting.id}">${setting.id}</label>
+                            <input class="input-color" id="${setting.id}" type="color" value="${setting.value}">
+                        </div>
+                    `;
+                    break;
+                case 'array':
+                    card.innerHTML += `
+                        <div class="setting-section">
+                            <label for="${setting.id}">${setting.id}</label>
+                            <textarea id="${setting.id}" rows="4">${setting.value.join('\n')}</textarea>
+                        </div>
+                    `;
+                    break;
+                case 'dropdown':
+                    card.innerHTML += `
+                        <div class="setting-section">
+                            <label for="${setting.id}">${setting.id}</label>
+                            <select id="${setting.id}">
+                                ${setting.options.map(option => `<option value="${option}" ${option === setting.value ? 'selected' : ''}>${option}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                    break;
+            }
+
+            container.appendChild(card);
+        });
+    }
+
+    function updateSettings(settings) {
+        settings.forEach(setting => {
+            const element = document.getElementById(setting.id);
+
+            if (setting.type === 'string' || setting.type === 'url') {
+                setting.value = element.value;
+            } else if (setting.type === 'slider') {
+                setting.value = parseInt(element.value);
+            } else if (setting.type === 'toggle') {
+                setting.value = element.checked;
+            } else if (setting.type === 'color') {
+                setting.value = element.value;
+            } else if (setting.type === 'array') {
+                setting.value = element.value.split('\n');
+            } else if (setting.type === 'dropdown') {
+                setting.value = element.value;
+            }
+        });
+    }
+
+    const settings = loadSettings();
+    renderSettings(settings);
+
+    document.getElementById('save-btn').addEventListener('click', () => {
+        updateSettings(settings);
+        saveSettings(settings);
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+        resetSettings();
+    });
+</script>
+
+</body>
+</html>
