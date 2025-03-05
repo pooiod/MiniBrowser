@@ -1,0 +1,36 @@
+{
+  "id": "/minibrowser",
+  "name": "MiniBrowser",
+  "short_name": "MiniBrowser",
+  
+  "description": "A smiple web browser for chrome",
+  
+  "display_override": ["tabbed"],
+  "display": "standalone",
+
+  "background_color": "#fff",
+  "theme_color": "#00c3ff",
+  
+  "start_url": "/app",
+  "scope": "/app",
+  "full_url": "https://minibrowserapp.pages.dev/app",
+  
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ],
+
+  "orientation": "any",
+
+  "lang": "en",
+
+  "tab_strip": {
+    "home_tab": ["absent"],
+    "new_tab_button": {
+      "url": "/"
+    }
+  }
+}
