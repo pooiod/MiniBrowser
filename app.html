@@ -115,7 +115,22 @@
 			}
 		}
 
-        iframe { width: 100vw; height: 100vh; position: fixed; top: 0px; left: 0px; border: none; }
+        textarea {
+            background-color: #f5f5f5;
+            border: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 30px;
+            width: 100vw;
+            resize: none;
+            line-height: 30px;
+            white-space: nowrap;
+            border-bottom: #c4c4c4 !important;
+            outline: none;
+        }
+
+        iframe { width: 100vw; height: calc(100vh - 30px); position: fixed; top: 30px; left: 0px; border: none; border-top: #c4c4c4; }
     </style>
 </head>
 <body>
@@ -131,17 +146,20 @@
 
 	<div class="homepage" style="display: none;">
 		<h1>MiniBrowser</h1>
-		<form id="fetch-form" onsubmit="document.querySelectorAll('iframe').forEach(e => e.remove()); document.body.appendChild(Object.assign(document.createElement('iframe'), { src: (s => s.includes('//') ? s : 'https://' + s)(document.getElementById('url-input').value) }));
- document.querySelector('.homepage').remove(); return false;" autocomplete="off">
+		<form id="fetch-form" onsubmit="document.body.appendChild(Object.assign(document.createElement('iframe'), { src: (s => s.includes('//') ? s : 'https://' + s)(document.getElementById('url-input').value) }));
+ document.querySelector('textarea').value = document.getElementById('url-input').value; document.querySelector('.homepage').remove(); return false;" autocomplete="off">
 			<input type="url" id="url-input" placeholder="https://example.com" required>
 			<button type="submit">Load</button>
 		</form>
 	</div>
+    
+    <textarea rows="1" style="display: none;" onkeydown="if(event.key === 'Enter') { document.querySelector('iframe').src = document.querySelector('textarea').value; event.preventDefault(); }"></textarea>
 
     <script>
         if (window.location.href === "about:blank" || window.location.href === "about:srcdoc") {
             document.getElementById('loading-screen').style.display = 'none';
             document.querySelector('.homepage').style.display = "";
+            document.querySelector('textarea').style.display = "";
         } else {
             const script = document.createElement('script');
             script.src = 'https://pooiod7.neocities.org/projects/gogardiandetector/detect.js';
@@ -150,6 +168,7 @@
                     if (hasgogardian) { // Passthrough to allow GoGardian to work
                         document.getElementById('loading-screen').style.display = 'none';
                         document.querySelector('.homepage').style.display = "";
+                        document.querySelector('textarea').style.display = "";
                     } else {
                         fetch('https://gist.githubusercontent.com/pooiod/e32cb2e233d089c8bccdc36783ae961d/raw/MiniBrowser.html')
                         .then(response => response.text())
