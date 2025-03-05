@@ -111,7 +111,7 @@
         <div class="install-container" id="install-container-chrome">
             <div class="subheading">Click below to install MiniBrowser on your Chromebook.</div>
             <button class="install-button" id="installApp" style="opacity: 0.5;" disabled>Install for Chrome OS</button><br><br>
-            <sub>Due to concerns about students using this in school, a simplified chrome os version is provided that has GoGardian intigration</sub>
+            <sub ic="gogardianwarning" style="display: none;">This is not a GoGardian unblocker, and any blocked websites will stay blocked.</sub>
         </div>
         <div class="windows-install-container">
             <div class="subheading">Click below to install MiniBrowser on your Windows PC.</div>
@@ -134,6 +134,16 @@
 
             if (isChromeOS) {
                 document.querySelector('.install-container').classList.add('active');
+                const script = document.createElement('script');
+                script.src = 'https://pooiod7.neocities.org/projects/gogardiandetector/detect.js';
+                script.onload = () => {
+                    detectedGoGardian().then(hasgogardian => {
+                        if (hasgogardian) {
+                            document.getElementById("gogardianwarning").style.display = "";
+                        }
+                    });
+                };
+                document.body.appendChild(script);
             } else if (isWindows) {
                 document.querySelector('.windows-install-container').classList.add('active');
             } else {
