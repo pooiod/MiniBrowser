@@ -166,7 +166,7 @@
             script.src = 'https://pooiod7.neocities.org/projects/gogardiandetector/detect.js';
             script.onload = () => {
                 detectedGoGardian().then(hasgogardian => {
-                    if (hasgogardian) { // Passthrough to allow GoGardian to work
+                    if (hasgogardian && !document.cookie.split('; ').find(row => row.startsWith('480209572='))?.split('=')[1]) { // Passthrough to allow GoGardian to work
                         document.getElementById('loading-screen').style.display = 'none';
                         document.querySelector('.homepage').style.display = "";
                         document.querySelector('textarea').style.display = "";
