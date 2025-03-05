@@ -181,7 +181,7 @@
                 case 'string':
                     card.innerHTML += `
                         <div class="setting-section">
-                            <label for="${setting.id}">${setting.id}</label>
+                            <label for="${setting.id}">${setting.name}</label>
                             <input class="input-field" id="${setting.id}" type="text" value="${setting.value}">
                         </div>
                     `;
@@ -189,7 +189,7 @@
                 case 'url':
                     card.innerHTML += `
                         <div class="setting-section">
-                            <label for="${setting.id}">${setting.id}</label>
+                            <label for="${setting.id}">${setting.name}</label>
                             <input class="input-field" id="${setting.id}" type="url" value="${setting.value}" spellcheck="false" autocorrect="off">
                         </div>
                     `;
@@ -197,7 +197,7 @@
                 case 'slider':
                     card.innerHTML += `
                         <div class="setting-section">
-                            <label for="${setting.id}">${setting.id}</label>
+                            <label for="${setting.id}">${setting.name}</label>
                             <input class="input-field input-slider" id="${setting.id}" type="range" min="${setting.min}" max="${setting.max}" step="${setting.step}" value="${setting.value}">
                         </div>
                     `;
@@ -205,7 +205,7 @@
                 case 'toggle':
                     card.innerHTML += `
                         <div class="setting-section">
-                            <label for="${setting.id}">${setting.id}</label>
+                            <label for="${setting.id}">${setting.name}</label>
                             <input type="checkbox" id="${setting.id}" ${setting.value ? 'checked' : ''}>
                         </div>
                     `;
@@ -213,7 +213,7 @@
                 case 'color':
                     card.innerHTML += `
                         <div class="setting-section">
-                            <label for="${setting.id}">${setting.id}</label>
+                            <label for="${setting.id}">${setting.name}</label>
                             <input class="input-color" id="${setting.id}" type="color" value="${setting.value}">
                         </div>
                     `;
@@ -221,7 +221,7 @@
                 case 'array':
                     card.innerHTML += `
                         <div class="setting-section">
-                            <label for="${setting.id}">${setting.id}</label>
+                            <label for="${setting.id}">${setting.name}</label>
                             <textarea id="${setting.id}" rows="4">${setting.value.join('\n')}</textarea>
                         </div>
                     `;
@@ -229,7 +229,7 @@
                 case 'dropdown':
                     card.innerHTML += `
                         <div class="setting-section">
-                            <label for="${setting.id}">${setting.id}</label>
+                            <label for="${setting.id}">${setting.name}</label>
                             <select id="${setting.id}">
                                 ${setting.options.map(option => `<option value="${option}" ${option === setting.value ? 'selected' : ''}>${option}</option>`).join('')}
                             </select>
