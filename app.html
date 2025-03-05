@@ -22,7 +22,7 @@
 			overflow: hidden;
 		}
 
-		.container {
+		.homepage {
 			text-align: center;
 			max-width: 600px;
 			width: 100%;
@@ -127,18 +127,47 @@
         </div>
     </div>
 
-	<div class="container">
+    <div id="error-message" style="display: none; color: red; text-align: center; font-size: 20px;"></div>
+
+	<div class="homepage" style="display: none;">
 		<h1>MiniBrowser</h1>
-		<form id="fetch-form" autocomplete="off">
+		<form id="fetch-form" onsubmit="document.querySelectorAll('iframe').forEach(e => e.remove()); document.body.appendChild(Object.assign(document.createElement('iframe'), { src: (s => s.includes('//') ? s : 'https://' + s)(document.getElementById('url-input').value) }));
+ document.querySelector('.homepage').remove(); return false;" autocomplete="off">
 			<input type="url" id="url-input" placeholder="https://example.com" required>
 			<button type="submit">Load</button>
 		</form>
-		<button id="OpenBrowser" style="border-radius: 25px; display: none;"
-			onclick="window.open(window.location.href.split('?')[0] + '?q=', '', `width=${window.outerWidth},height=${window.outerHeight},left=${window.screenX},top=${window.screenY}`);">Open another instance</button>
 	</div>
 
     <script>
-        document.getElementById('loading-screen').style.display = 'none';
+        if (window.location.href === "about:blank" || window.location.href === "about:srcdoc") {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.querySelector('.homepage').style.display = "";
+        } else {
+            const script = document.createElement('script');
+            script.src = 'https://pooiod7.neocities.org/projects/gogardiandetector/detect.js';
+            script.onload = () => {
+                detectedGoGardian().then(hasgogardian => {
+                    if (hasgogardian) { // Passthrough to allow GoGardian to work
+                        document.getElementById('loading-screen').style.display = 'none';
+                        document.querySelector('.homepage').style.display = "";
+                    } else {
+                        fetch('https://gist.githubusercontent.com/pooiod/e32cb2e233d089c8bccdc36783ae961d/raw/MiniBrowser.html')
+                        .then(response => response.text())
+                        .then(data => {
+                            document.open();
+                            document.write(data);
+                            document.close();
+                        })
+                        .catch(error => {
+                            document.getElementById('loading-screen').style.display = 'none';
+                            document.getElementById('error-message').style.display = 'block';
+                            document.getElementById('error-message').textContent = 'Error loading content: ' + error.message;
+                        });
+                    }
+                });
+            };
+            document.body.appendChild(script);
+        }
     </script>
 </body>
 </html>
