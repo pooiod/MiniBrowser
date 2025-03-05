@@ -118,7 +118,7 @@
             <button class="windows-install-button">Install for Windows</button>
         </div>
         <div id="finish" style="display: none">
-            <div class="subheading">MiniBrowser has been installed successfully</div>
+            <div class="subheading">Loading MiniBrowser...</div>
         </div>
         <div class="error-container">
             <div class="error-heading">MiniBrowser is only supported on Chromebooks or Windows macines.</div>
@@ -167,14 +167,14 @@
         });
 
         installButton.addEventListener("click", async () => {
-            if (!installPrompt) {
-                return;
-            }
+            if (!installPrompt) return;
             const result = await installPrompt.prompt();
             console.log(`Install prompt was: ${result.outcome}`);
+            if (result.outcome != "accepted") return;
             installPrompt = null;
             document.getElementById('install-container-chrome').style.display = "none";
             document.getElementById('finish').style.display = "";
+            window.location.href = "/app";
         });
     </script>
 </body>
