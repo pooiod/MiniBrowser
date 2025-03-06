@@ -15,10 +15,11 @@ setTimeout(function() {
 
     var togglePrettify = document.createElement("button");
     togglePrettify.innerText = "Toggle Prettify";
-    togglePrettify.style.magrinRight = "10px";
+    togglePrettify.style.cssText = "margin-right: 10px; margin-top: 10px; ";
     document.body.appendChild(togglePrettify);
 
     var toggleWrap = document.createElement("button");
+    toggleWrap.style.cssText = "margin-right: 10px; margin-top: 10px; ";
     toggleWrap.innerText = "Toggle Word Wrap";
     document.body.appendChild(toggleWrap);
 
