@@ -31,7 +31,7 @@ getMiniBrowserSetting = function(id) {
 
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
-  if (typeof window !== 'undefined' || !window.document) {
+  if (typeof window == 'undefined' || !window.document) {
     event.respondWith(
       fetch(event.request).catch(() => caches.match(event.request))
     );
