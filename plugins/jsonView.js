@@ -13,6 +13,8 @@ setTimeout(function() {
     document.body.innerHTML = "";
     document.body.style.margin = "0px"; 
 
+    document.body.style.height = "100vh";
+
     var togglePrettify = document.createElement("button");
     togglePrettify.innerText = "Toggle Prettify";
     togglePrettify.style.cssText = "margin-left: 10px; margin-top: 10px; ";
