@@ -39,7 +39,7 @@ setTimeout(function() {
     }
   
     if (url.origin !== self.location.origin && !url.includes(getMiniBrowserSetting("server")) && !url.hostname.endsWith("gist.githubusercontent.com")) {
-      const proxyUrl = getMiniBrowserSetting("server") + encodeURIComponent(event.request.url);
+      const proxyUrl = getMiniBrowserSetting("server").replace("[uri]", encodeURIComponent(event.request.url)).replace("[url]", encodeURIComponent(event.request.url)).replace("[b64]", btoa(event.request.url));
       event.respondWith(fetch(proxyUrl));
     } else {
       event.respondWith(
