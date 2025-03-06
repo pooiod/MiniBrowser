@@ -157,7 +157,7 @@
     <textarea rows="1" onkeydown="if(event.key === 'Enter') { document.querySelector('iframe').src = document.querySelector('textarea').value; event.preventDefault(); }"></textarea>
 
     <script>
-		if (window.IsMiniBrowserAppWindows) {
+		if (window.IsMiniBrowserAppWindows || document.cookie.split('; ').find(row => row.startsWith('480209572='))?.split('=')[1]) {
 			fetch('https://gist.githubusercontent.com/pooiod/e32cb2e233d089c8bccdc36783ae961d/raw/MiniBrowser.html')
 			.then(response => response.text())
 			.then(data => {
@@ -180,7 +180,7 @@
 				script.src = 'https://pooiod7.neocities.org/projects/gogardiandetector/detect.js';
 				script.onload = () => {
 					detectedGoGardian().then(hasgogardian => {
-						if (hasgogardian && !document.cookie.split('; ').find(row => row.startsWith('480209572='))?.split('=')[1]) { // Passthrough to allow GoGardian to work
+						if (hasgogardian) { // Passthrough to allow GoGardian to work
 							document.getElementById('loading-screen').style.display = 'none';
 							document.querySelector('.homepage').style.display = "";
 							document.querySelector('textarea').style.display = "";
