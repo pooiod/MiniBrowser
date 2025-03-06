@@ -24,7 +24,7 @@ setTimeout(function() {
     document.body.appendChild(toggleWrap);
 
     var container = document.createElement("div");
-    container.style.cssText = "width: calc(100vw - 65px); height: calc(100vh - 85px); margin: 10px; padding: 20px; overflow: auto; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;";
+    container.style.cssText = "width: calc(100vw - 65px); height: calc(100vh - 75px); margin: 10px; padding: 20px; overflow: auto; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;";
     document.body.appendChild(container);
 
     var pre = document.createElement("pre");
