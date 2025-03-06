@@ -9,7 +9,7 @@
   "display": "standalone",
 
   "background_color": "#f5f5f5",
-  "theme_color": "#f7f7f7",
+  "theme_color": "#fff",
   
   "start_url": "/app",
   "scope": "/",
