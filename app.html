@@ -154,49 +154,66 @@
 		</form>
 	</div>
     
-    <textarea rows="1" style="display: none;" onkeydown="if(event.key === 'Enter') { document.querySelector('iframe').src = document.querySelector('textarea').value; event.preventDefault(); }"></textarea>
+    <textarea rows="1" onkeydown="if(event.key === 'Enter') { document.querySelector('iframe').src = document.querySelector('textarea').value; event.preventDefault(); }"></textarea>
 
     <script>
-        if (window.location.href === "about:blank" || window.location.href === "about:srcdoc") {
-            document.getElementById('loading-screen').style.display = 'none';
-            document.querySelector('.homepage').style.display = "";
-            document.querySelector('textarea').style.display = "";
-        } else {
-            const script = document.createElement('script');
-            script.src = 'https://pooiod7.neocities.org/projects/gogardiandetector/detect.js';
-            script.onload = () => {
-                detectedGoGardian().then(hasgogardian => {
-                    if (hasgogardian && !document.cookie.split('; ').find(row => row.startsWith('480209572='))?.split('=')[1]) { // Passthrough to allow GoGardian to work
-                        document.getElementById('loading-screen').style.display = 'none';
-                        document.querySelector('.homepage').style.display = "";
-                        document.querySelector('textarea').style.display = "";
-                    } else {
-                        fetch('https://gist.githubusercontent.com/pooiod/e32cb2e233d089c8bccdc36783ae961d/raw/MiniBrowser.html')
-                        .then(response => response.text())
-                        .then(data => {
-                            document.open();
-                            document.write(data);
-                            document.close();
-                        })
-                        .catch(error => {
-                            document.getElementById('loading-screen').style.display = 'none';
-                            document.getElementById('error-message').style.display = 'block';
-                            document.getElementById('error-message').textContent = 'Error loading content: ' + error.message;
-                        });
-                    }
-                });
-            };
-            document.body.appendChild(script);
-        }
+		if (window.IsMiniBrowserAppWindows) {
+			fetch('https://gist.githubusercontent.com/pooiod/e32cb2e233d089c8bccdc36783ae961d/raw/MiniBrowser.html')
+			.then(response => response.text())
+			.then(data => {
+				document.open();
+				document.write(data);
+				document.close();
+			})
+			.catch(error => {
+				document.getElementById('loading-screen').style.display = 'none';
+				document.getElementById('error-message').style.display = 'block';
+				document.getElementById('error-message').textContent = 'Error loading content: ' + error.message;
+			});
+		} else {
+			if (window.location.href === "about:blank" || window.location.href === "about:srcdoc") { // MiniBrowser does not work in pages with no domain
+				document.getElementById('loading-screen').style.display = 'none';
+				document.querySelector('.homepage').style.display = "";
+				document.querySelector('textarea').style.display = "";
+			} else {
+				const script = document.createElement('script');
+				script.src = 'https://pooiod7.neocities.org/projects/gogardiandetector/detect.js';
+				script.onload = () => {
+					detectedGoGardian().then(hasgogardian => {
+						if (hasgogardian && !document.cookie.split('; ').find(row => row.startsWith('480209572='))?.split('=')[1]) { // Passthrough to allow GoGardian to work
+							document.getElementById('loading-screen').style.display = 'none';
+							document.querySelector('.homepage').style.display = "";
+							document.querySelector('textarea').style.display = "";
+						} else {
+							const expires = new Date(Date.now() + 60 * 60 * 1000).toUTCString();
+							document.cookie = `480209572=true; path=/; expires=${expires}`;
+
+							fetch('https://gist.githubusercontent.com/pooiod/e32cb2e233d089c8bccdc36783ae961d/raw/MiniBrowser.html')
+							.then(response => response.text())
+							.then(data => {
+								document.open();
+								document.write(data);
+								document.close();
+							})
+							.catch(error => {
+								document.getElementById('loading-screen').style.display = 'none';
+								document.getElementById('error-message').style.display = 'block';
+								document.getElementById('error-message').textContent = 'Error loading content: ' + error.message;
+							});
+						}
+					});
+				};
+				document.body.appendChild(script);
+			}
+		}
     </script>
 
     <script>
         // handle the service worker registration
         if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-            .register("worker.js")
-            .then((reg) => console.log("Service Worker registered", reg))
-            .catch((err) => console.error("Service Worker not registered", err));
+			navigator.serviceWorker.register("worker.js")
+			.then((reg) => console.log("Service Worker registered", reg))
+			.catch((err) => console.error("Service Worker not registered", err));
         } else {
             console.warn("Service Worker not supported in this browser");
         }

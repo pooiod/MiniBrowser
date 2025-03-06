@@ -11,13 +11,13 @@ getMiniBrowserSetting = function(id) {
   let settings = [];
 
   try {
-      settings = cookie ? JSON.parse(decodeURIComponent(cookie)) : [];
+    settings = cookie ? JSON.parse(decodeURIComponent(cookie)) : [];
   } catch (e) {
-      settings = [];
+    settings = [];
   }
 
   if (settings.length === 0) {
-      return null;
+    return null;
   }
 
   const setting = settings.find(setting => setting.id === id);

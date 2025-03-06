@@ -142,6 +142,8 @@
 </div>
 
 <script>
+    if (window.IsMiniBrowserAppWindows) document.title = "Settings";
+
     function loadSettings() {
         const cookie = document.cookie.replace(/(?:(?:^|.*;\s*)MiniBrowserSettings\s*\=\s*([^;]*).*$)|^.*$/, "$1");
         let settings = [];
@@ -188,17 +190,18 @@
         style.innerHTML = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
         document.head.appendChild(style);
 
-        fetch('settings.html')
-            .then(response => response.text())
-            .then(data => {
-                document.open();
-                document.write(data);
-                document.close();
-            })
-            .catch(error => {
-            if (error.message == "Failed to fetch") error.message = "Failed to load settings";
-                window.showTinyBrowserAlert("Error", error.message, "error");
-            });
+        window.location.reload();
+        // fetch('settings.html')
+        //     .then(response => response.text())
+        //     .then(data => {
+        //         document.open();
+        //         document.write(data);
+        //         document.close();
+        //     })
+        //     .catch(error => {
+        //     if (error.message == "Failed to fetch") error.message = "Failed to load settings";
+        //         window.showTinyBrowserAlert("Error", error.message, "error");
+        //     });
     }
 
     function renderSettings(settings) {
