@@ -278,8 +278,7 @@
                 case 'toggle':
                     card.innerHTML += `
                         <div class="setting-section">
-                            <label for="${setting.id}">${setting.name}</label>
-                            <input type="checkbox" id="${setting.id}" ${setting.value ? 'checked' : ''}>
+                            <label for="${setting.id}">${setting.name}</label> <input type="checkbox" id="${setting.id}" ${setting.value ? 'checked' : ''}>
                         </div>
                     `;
                     break;
