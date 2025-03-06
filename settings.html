@@ -153,7 +153,7 @@
         }
 
         if (settings.length === 0) {
-            settings = defaultMiniBrowserSettings;
+            settings = MiniBrowserPlugin.BrowserSettings;
         }
 
         return settings;
@@ -165,7 +165,7 @@
     }
 
     function resetSettings() {
-        document.cookie = "MiniBrowserSettings=" + encodeURIComponent(JSON.stringify(defaultMiniBrowserSettings)) + ";path=/";
+        document.cookie = "MiniBrowserSettings=" + encodeURIComponent(JSON.stringify(MiniBrowserPlugin.BrowserSettings)) + ";path=/";
 
         document.body.innerHTML = '';
         document.body.style.display = 'flex';
