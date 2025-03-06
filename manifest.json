@@ -12,7 +12,7 @@
   "theme_color": "#fff",
   
   "start_url": "/app",
-  "scope": "/",
+  "scope": "/app",
   "full_url": "https://minibrowserapp.pages.dev/app",
   
   "icons": [
