@@ -7,7 +7,7 @@ self.addEventListener("install", (e) => {
 });
 
 getMiniBrowserSetting = function(id) {
-  if (!window.document) {
+  if (typeof window == 'undefined' || !window.document) {
     return null;
   }
 
