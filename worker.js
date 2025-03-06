@@ -1,7 +1,7 @@
 self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open("mini-browser-cache").then((cache) => {
-      return cache.addAll(["/app"]);
+      return cache.addAll(["/app/index.html", "/settings.html"]);
     })
   );
 });
@@ -27,6 +27,12 @@ getMiniBrowserSetting = function(id) {
 
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
+  if (!window.document) {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(event.request))
+    );
+  }
+
   if (url.origin !== self.location.origin && !url.includes(getMiniBrowserSetting("server")) && !url.hostname.endsWith("gist.githubusercontent.com")) {
     const proxyUrl = getMiniBrowserSetting("server") + encodeURIComponent(event.request.url);
     event.respondWith(fetch(proxyUrl));
