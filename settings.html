@@ -151,6 +151,10 @@
 <script>
     if (window.IsMiniBrowserAppWindows) document.title = "Settings";
 
+    if (MiniBrowserPlugin.getBrowserSetting("DevToolsEnabled")) {
+      (function () { var script = document.createElement('script'); script.src="https://pooiod7.neocities.org/projects/scripthub/scripts/eruda.js"; document.body.append(script); })();
+    }
+
     function loadSettings() {
         const cookie = document.cookie.replace(/(?:(?:^|.*;\s*)MiniBrowserSettings\s*\=\s*([^;]*).*$)|^.*$/, "$1");
         let settings = [];
