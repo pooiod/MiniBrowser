@@ -83,11 +83,11 @@
     <div id="error-message" style="display: none; color: red; text-align: center; font-size: 20px;"></div>
 
     <script>
-        var attempts = 0;
-        function dothing() {
-            attempts ++;
-            if (window.IsMiniBrowserAppWindows) {
-                clearInterval(dothinginterval);
+        // var attempts = 0;
+        // function dothing() {
+        //     attempts ++;
+        //     if (window.IsMiniBrowserAppWindows) {
+                // clearInterval(dothinginterval);
                 fetch('https://gist.githubusercontent.com/pooiod/e32cb2e233d089c8bccdc36783ae961d/raw/MiniBrowser.html')
                 .then(response => response.text())
                 .then(data => {
@@ -100,14 +100,14 @@
                     document.getElementById('error-message').style.display = 'block';
                     document.getElementById('error-message').textContent = 'Error loading content: ' + error.message;
                 });
-            } else if (attempts >= 30) {
-                clearInterval(dothinginterval);
-                document.getElementById('loading-screen').style.display = 'none';
-                document.getElementById('error-message').style.display = 'block';
-                document.getElementById('error-message').textContent = 'Unabble to varify build';
-            }
-        }
-        var dothinginterval = setInterval(dothing, 1000); dothing();
+        //     } else if (attempts >= 30) {
+        //         clearInterval(dothinginterval);
+        //         document.getElementById('loading-screen').style.display = 'none';
+        //         document.getElementById('error-message').style.display = 'block';
+        //         document.getElementById('error-message').textContent = 'Unabble to varify build';
+        //     }
+        // }
+        // var dothinginterval = setInterval(dothing, 1000); dothing();
     </script>
 
     <script>
