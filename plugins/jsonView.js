@@ -15,6 +15,7 @@ setTimeout(function() {
 
     var togglePrettify = document.createElement("button");
     togglePrettify.innerText = "Toggle Prettify";
+    togglePrettify.style.magrinRight = "10px";
     document.body.appendChild(togglePrettify);
 
     var toggleWrap = document.createElement("button");
