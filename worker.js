@@ -27,8 +27,8 @@ getMiniBrowserSetting = function(id) {
 
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
-  if (url.origin !== self.location.origin && !url.includes(MiniBrowserPlugin.getBrowserSetting("server")) && !url.hostname.endsWith("gist.githubusercontent.com")) {
-    const proxyUrl = MiniBrowserPlugin.getBrowserSetting("server") + encodeURIComponent(event.request.url);
+  if (url.origin !== self.location.origin && !url.includes(getMiniBrowserSetting("server")) && !url.hostname.endsWith("gist.githubusercontent.com")) {
+    const proxyUrl = getMiniBrowserSetting("server") + encodeURIComponent(event.request.url);
     event.respondWith(fetch(proxyUrl));
   } else {
     event.respondWith(
