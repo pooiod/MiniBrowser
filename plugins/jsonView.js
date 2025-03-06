@@ -1,4 +1,4 @@
-(function() {
+setTimeout(function() {
     console.log("Starting JSON viewer");
     var raw = document.body.innerText.trim();
     console.log("Raw text:", raw);
@@ -81,4 +81,4 @@
 
     render();
     console.log("JSON viewer loaded");
-})();
+}, 1000);
