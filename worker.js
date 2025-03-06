@@ -7,6 +7,10 @@ self.addEventListener("install", (e) => {
 });
 
 getMiniBrowserSetting = function(id) {
+  if (!window.document) {
+    return null;
+  }
+
   const cookie = document.cookie.replace(/(?:(?:^|.*;\s*)MiniBrowserSettings\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   let settings = [];
 

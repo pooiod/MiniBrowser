@@ -163,6 +163,28 @@
 
     function saveSettings(settings) {
         document.cookie = "MiniBrowserSettings=" + encodeURIComponent(JSON.stringify(settings)) + ";path=/";
+
+        document.body.innerHTML = '';
+        document.body.style.display = 'flex';
+        document.body.style.justifyContent = 'center';
+        document.body.style.alignItems = 'center';
+        document.body.style.height = '100vh';
+        document.body.style.margin = '0';
+
+        let spinner = document.createElement('div');
+        spinner.style.width = '50px';
+        spinner.style.height = '50px';
+        spinner.style.border = '5px solid rgba(0, 0, 0, 0.1)';
+        spinner.style.borderTop = '5px solid black';
+        spinner.style.borderRadius = '50%';
+        spinner.style.animation = 'spin 1s linear infinite';
+
+        document.body.appendChild(spinner);
+
+        let style = document.createElement('style');
+        style.innerHTML = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+        document.head.appendChild(style);
+
         location.reload();
     }
 
