@@ -29,23 +29,25 @@ getMiniBrowserSetting = function(id) {
   return setting ? setting.value : null;
 }
 
-self.addEventListener("fetch", (event) => {
-  const url = new URL(event.request.url);
-  if (typeof window == 'undefined' || !window.document) {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match(event.request))
-    );
-  }
-
-  if (url.origin !== self.location.origin && !url.includes(getMiniBrowserSetting("server")) && !url.hostname.endsWith("gist.githubusercontent.com")) {
-    const proxyUrl = getMiniBrowserSetting("server") + encodeURIComponent(event.request.url);
-    event.respondWith(fetch(proxyUrl));
-  } else {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match(event.request))
-    );
-  }
-});
+setTimeout(function() {
+  self.addEventListener("fetch", (event) => {
+    const url = new URL(event.request.url);
+    if (typeof window == 'undefined' || !window.document) {
+      event.respondWith(
+        fetch(event.request).catch(() => caches.match(event.request))
+      );
+    }
+  
+    if (url.origin !== self.location.origin && !url.includes(getMiniBrowserSetting("server")) && !url.hostname.endsWith("gist.githubusercontent.com")) {
+      const proxyUrl = getMiniBrowserSetting("server") + encodeURIComponent(event.request.url);
+      event.respondWith(fetch(proxyUrl));
+    } else {
+      event.respondWith(
+        fetch(event.request).catch(() => caches.match(event.request))
+      );
+    }
+  });
+}, 500);
 
 self.addEventListener("push", (e) => {
   const data = e.data.json();
