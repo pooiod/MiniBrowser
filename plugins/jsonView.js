@@ -15,16 +15,16 @@ setTimeout(function() {
 
     var togglePrettify = document.createElement("button");
     togglePrettify.innerText = "Toggle Prettify";
-    togglePrettify.style.cssText = "margin-right: 10px; margin-top: 10px; ";
+    togglePrettify.style.cssText = "margin-left: 10px; margin-top: 10px; ";
     document.body.appendChild(togglePrettify);
 
     var toggleWrap = document.createElement("button");
-    toggleWrap.style.cssText = "margin-right: 10px; margin-top: 10px; ";
+    toggleWrap.style.cssText = "margin-left: 10px; margin-top: 10px; ";
     toggleWrap.innerText = "Toggle Word Wrap";
     document.body.appendChild(toggleWrap);
 
     var container = document.createElement("div");
-    container.style.cssText = "width: calc(100vw - 65px); height: calc(100vh - 75px); margin: 10px; padding: 20px; overflow: auto; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;";
+    container.style.cssText = "width: calc(100vw - 65px); height: calc(100vh - 95px); margin: 10px; padding: 20px; overflow: auto; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;";
     document.body.appendChild(container);
 
     var pre = document.createElement("pre");
