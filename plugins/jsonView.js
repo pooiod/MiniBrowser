@@ -5,9 +5,7 @@ setTimeout(function() {
     var jsonData;
     try {
         jsonData = JSON.parse(raw);
-        console.log("Valid JSON found");
     } catch (e) {
-        console.log("Not valid JSON");
         return;
     }
     document.body.innerHTML = "";
@@ -62,21 +60,17 @@ setTimeout(function() {
     function render() {
         var jsonToDisplay = currentPrettify ? pretty : compact;
         pre.innerHTML = highlightJSON(jsonToDisplay);
-        console.log("Rendered JSON with prettify:", currentPrettify);
         pre.style.whiteSpace = currentWrap ? "pre-wrap" : "pre";
-        console.log("Rendered with word wrap:", currentWrap);
     }
 
     togglePrettify.addEventListener("click", function() {
         currentPrettify = !currentPrettify;
         render();
-        console.log("Toggled prettify:", currentPrettify);
     });
 
     toggleWrap.addEventListener("click", function() {
         currentWrap = !currentWrap;
         render();
-        console.log("Toggled word wrap:", currentWrap);
     });
 
     var style = document.createElement("style");
@@ -84,5 +78,7 @@ setTimeout(function() {
     document.head.appendChild(style);
 
     render();
-    console.log("JSON viewer loaded");
-}, 1000);
+
+    togglePrettify.click();
+    toggleWrap.click();
+}, 100);
