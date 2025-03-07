@@ -114,12 +114,12 @@
             <button class="install-button" id="installApp" style="opacity: 0.5;" disabled>Install for Chrome OS</button><br><br>
             <sub id="gogardianwarning" style="display: none;">This is not a GoGardian unblocker, blocked websites will stay blocked.</sub>
         </div>
-        <div class="windows-install-container">
+        <div class="windows-install-container" id="install-container-windows">
             <div class="subheading">A simple web browser built with mostly client side javascript in an electron wrapper</div>
             <button class="windows-install-button" onclick="window.open('https:\/\/yeetyourfiles.lol/file/28023367/MiniBrowser.zip')">Download ZIP</button>
         </div>
-        <div id="finish" style="display: none">
-            <div class="subheading">Loading MiniBrowser...</div>
+        <div id="finish" style="display: none" id="finish">
+            <div class="subheading" id="msg">Loading MiniBrowser...</div>
         </div>
         <div class="error-container">
             <div class="error-heading">MiniBrowser is only supported on Chromebooks or Windows macines.</div>
@@ -153,6 +153,13 @@
         }
 
         checkPlatform();
+
+        if (window.MiniBrowserPlugin) {
+            document.getElementById('install-container-chrome').style.opacity = 0;
+            document.getElementById('install-container-windows').style.opacity = 0;
+            document.getElementById('finish').style.opacity = 1;
+            document.getElementById('msg').innerHTML = "Something went wrong while trying to fetch your page<br>Try changing your content server in the settings";
+        }
     </script>
 
     <script> // this app uses developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/display_override#tabbed
