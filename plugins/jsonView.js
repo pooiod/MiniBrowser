@@ -1,7 +1,5 @@
 setTimeout(function() {
-    console.log("Starting JSON viewer");
     var raw = document.body.innerText.trim();
-    console.log("Raw text:", raw);
     var jsonData;
     try {
         jsonData = JSON.parse(raw);
