@@ -155,10 +155,11 @@
         checkPlatform();
 
         if (window.MiniBrowserPlugin) {
-            document.getElementById('install-container-chrome').style.opacity = 0;
-            document.getElementById('install-container-windows').style.opacity = 0;
-            document.getElementById('finish').style.opacity = 1;
-            document.getElementById('msg').innerHTML = "Something went wrong while trying to fetch your page<br>Try changing your content server in the settings";
+            document.getElementById('install-container-chrome').style.display = "none";
+            document.getElementById('install-container-windows').style.display = "none";
+            document.getElementById('finish').style.display = "block";
+            document.getElementById('msg').innerHTML = "Try changing your content server in the settings";
+            document.querySelector("body > div > div.heading").innerHTML = "Something went wrong";
         }
     </script>
 
