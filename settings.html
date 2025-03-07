@@ -171,7 +171,7 @@
     }
 
     function saveSettings(settings) {
-        document.cookie = "MiniBrowserSettings=" + encodeURIComponent(JSON.stringify(settings)) + ";path=/";
+        document.cookie = "MiniBrowserSettings=" + encodeURIComponent(JSON.stringify(settings)) + ";path=/;expires=" + new Date(new Date().setFullYear(new Date().getFullYear() + 999)).toUTCString();
 
         document.body.innerHTML = '';
         document.body.style.display = 'flex';
