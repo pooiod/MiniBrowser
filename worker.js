@@ -29,6 +29,23 @@ getMiniBrowserSetting = function(id) {
   return setting ? setting.value : null;
 }
 
+setupLinkForFetch = function(url) {
+  var corsLinks = MiniBrowserPlugin.getBrowserSetting("CORSdomains") || [];
+  var domain = new URL(url).hostname;
+
+  for (var i = 0; i < corsLinks.length; i++) {
+    var pattern = corsLinks[i].replace(/\./g, '\\.').replace(/\*/g, '.*');
+    var regex = new RegExp("^" + pattern + "$");
+    if (regex.test(domain)) {
+      return url;
+    }
+  }
+
+  console.log("Content setup for fetch:", url);
+  url = MiniBrowserPlugin.getBrowserSetting("server").replace("[uri]", encodeURIComponent(url)).replace("[url]", url).replace("[b64]", btoa(url))
+  return url;
+};
+
 setTimeout(function() {
   self.addEventListener("fetch", (event) => {
     const url = new URL(event.request.url);
@@ -39,7 +56,7 @@ setTimeout(function() {
     }
   
     if (url.origin !== self.location.origin && !url.includes(getMiniBrowserSetting("server")) && !url.hostname.endsWith("gist.githubusercontent.com")) {
-      const proxyUrl = getMiniBrowserSetting("server").replace("[uri]", encodeURIComponent(event.request.url)).replace("[url]", event.request.url).replace("[b64]", btoa(event.request.url));
+      const proxyUrl = setupLinkForFetch(event.request.url);
       event.respondWith(fetch(proxyUrl));
     } else {
       event.respondWith(
