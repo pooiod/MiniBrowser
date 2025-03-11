@@ -158,8 +158,14 @@
             document.getElementById('install-container-chrome').style.display = "none";
             document.getElementById('install-container-windows').style.display = "none";
             document.getElementById('finish').style.display = "block";
-            document.getElementById('msg').innerHTML = "Try changing your content server in the settings";
+            document.getElementById('msg').innerHTML = "Attempting to recover session...";
             document.querySelector("body > div > div.heading").innerHTML = "Something went wrong";
+            let session = document.cookie.split('; ').find(row => row.startsWith('MiniBrowserSession='))?.split('=')[1];
+            if (session && !session == window.location.host) {
+                window.location.href = `${window.location.origin + window.location.pathname}?9350038=${session}${window.location.search.replace(/[\?&]9350038=[^&]*/, '')}${window.location.hash}`;
+            } else {
+                document.getElementById('msg').innerHTML = "URL redirect failed to construct";
+            }
         }
     </script>
 
